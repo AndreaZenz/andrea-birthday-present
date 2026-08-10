@@ -1,420 +1,440 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>A Little Birthday Present 🎁</title>
 
     <!-- WhatsApp / Social Preview -->
-    <meta property="og:title" content="A little birthday present 🎁">
-    <meta property="og:description"
-          content="If you don't know what to get me, you can always send me some money 😂">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="A little birthday present 🎁" />
+    <meta
+      property="og:description"
+      content="If you don't know what to get me, you can always send me some money"
+    />
+    <meta property="og:type" content="website" />
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+      * {
+        box-sizing: border-box;
+      }
 
-        html,
-        body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #111;
-            color: #222;
-        }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #111;
+        color: #222;
+      }
 
-        /* =========================
+      /* =========================
            PHOTO BACKGROUND
            ========================= */
 
-        .photo-wall {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            background: #111;
-        }
+      .photo-wall {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        background: #111;
+      }
 
-        .photo-row {
-            position: absolute;
-            left: 0;
-            width: max-content;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            will-change: transform;
-        }
+      .photo-row {
+        position: absolute;
+        left: 0;
+        width: max-content;
 
-        .row-1 {
-            top: -20px;
-            animation: moveLeft1 45s linear infinite;
-        }
+        display: flex;
+        align-items: center;
+        gap: 14px;
 
-        .row-2 {
-            top: 32%;
-            animation: moveLeft2 60s linear infinite;
-        }
+        will-change: transform;
+      }
 
-        .row-3 {
-            top: 67%;
-            animation: moveLeft3 52s linear infinite;
-        }
+      .row-1 {
+        top: -25px;
+        animation: moveLeft 55s linear infinite;
+      }
 
-        .photo {
-            width: 190px;
-            height: 145px;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
+      .row-2 {
+        top: 16%;
+        animation: moveRight 65s linear infinite;
+      }
 
-            /* Slightly faded so the card stays readable */
-            opacity: 0.72;
+      .row-3 {
+        top: 33%;
+        animation: moveLeft 48s linear infinite;
+      }
 
-            box-shadow:
-                0 8px 20px rgba(0, 0, 0, 0.35);
+      .row-4 {
+        top: 50%;
+        animation: moveRight 58s linear infinite;
+      }
 
-            user-select: none;
-            pointer-events: none;
-        }
+      .row-5 {
+        top: 67%;
+        animation: moveLeft 52s linear infinite;
+      }
 
-        .photo:nth-child(3n) {
-            transform: rotate(-2deg);
-        }
+      .row-6 {
+        top: 84%;
+        animation: moveRight 62s linear infinite;
+      }
 
-        .photo:nth-child(3n + 1) {
-            transform: rotate(1.5deg);
-        }
+      .photo {
+        width: 190px;
+        height: 145px;
 
-        .photo:nth-child(3n + 2) {
-            transform: rotate(-1deg);
-        }
+        object-fit: cover;
 
-        /* Dark overlay */
-        .photo-overlay {
-            position: fixed;
-            inset: 0;
-            background:
-                linear-gradient(
-                    rgba(0, 0, 0, 0.28),
-                    rgba(0, 0, 0, 0.42)
-                );
-            pointer-events: none;
-            z-index: 2;
-        }
+        border-radius: 10px;
 
-        /* =========================
+        flex-shrink: 0;
+
+        opacity: 0.72;
+
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+        user-select: none;
+        pointer-events: none;
+      }
+      .photo:nth-child(3n) {
+        transform: rotate(-2deg);
+      }
+
+      .photo:nth-child(3n + 1) {
+        transform: rotate(1.5deg);
+      }
+
+      .photo:nth-child(3n + 2) {
+        transform: rotate(-1deg);
+      }
+
+      /* Dark overlay */
+      .photo-overlay {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.42));
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* =========================
            CENTER CARD
            ========================= */
 
-        .content {
-            position: fixed;
-            inset: 0;
-            z-index: 10;
+      .content {
+        position: fixed;
+        inset: 0;
+        z-index: 10;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-            padding: 20px;
-        }
+        padding: 20px;
+      }
 
-        .card {
-            width: min(430px, 100%);
+      .card {
+        width: min(430px, 100%);
 
-            background: rgba(255, 255, 255, 0.94);
+        background: rgba(255, 255, 255, 0.94);
 
-            padding: 42px 36px;
+        padding: 42px 36px;
 
-            border-radius: 24px;
+        border-radius: 24px;
 
-            text-align: center;
+        text-align: center;
 
-            box-shadow:
-                0 25px 70px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
 
-            backdrop-filter: blur(8px);
-        }
+        backdrop-filter: blur(8px);
+      }
 
-        .emoji {
-            font-size: 58px;
-            margin-bottom: 12px;
-        }
+      .emoji {
+        font-size: 58px;
+        margin-bottom: 12px;
+      }
 
-        h1 {
-            margin: 0 0 16px;
-            font-size: 30px;
-            line-height: 1.15;
-        }
+      h1 {
+        margin: 0 0 16px;
+        font-size: 30px;
+        line-height: 1.15;
+      }
 
-        p {
-            margin: 0;
-            color: #555;
-            font-size: 17px;
-            line-height: 1.55;
-        }
+      p {
+        margin: 0;
+        color: #555;
+        font-size: 17px;
+        line-height: 1.55;
+      }
 
-        .button {
-            display: inline-block;
+      .button {
+        display: inline-block;
 
-            margin-top: 28px;
-            padding: 15px 30px;
+        margin-top: 28px;
+        padding: 15px 30px;
 
-            background: #0070ba;
-            color: white;
+        background: #0070ba;
+        color: white;
 
-            text-decoration: none;
+        text-decoration: none;
 
-            border-radius: 999px;
+        border-radius: 999px;
 
-            font-size: 16px;
-            font-weight: bold;
+        font-size: 16px;
+        font-weight: bold;
 
-            box-shadow:
-                0 7px 18px rgba(0, 112, 186, 0.3);
+        box-shadow: 0 7px 18px rgba(0, 112, 186, 0.3);
 
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
-        }
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
 
-        .button:hover {
-            background: #005ea6;
-            transform: translateY(-2px);
+      .button:hover {
+        background: #005ea6;
+        transform: translateY(-2px);
 
-            box-shadow:
-                0 10px 25px rgba(0, 112, 186, 0.4);
-        }
+        box-shadow: 0 10px 25px rgba(0, 112, 186, 0.4);
+      }
 
-        .small-text {
-            margin-top: 18px;
+      .small-text {
+        margin-top: 18px;
 
-            font-size: 12px;
-            color: #999;
-        }
+        font-size: 12px;
+        color: #999;
+      }
 
-        /* =========================
+      /* =========================
            ANIMATIONS
            ========================= */
 
-        @keyframes moveLeft1 {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
+      @keyframes moveLeft1 {
+        from {
+          transform: translateX(0);
         }
 
-        @keyframes moveLeft2 {
-            from {
-                transform: translateX(-15%);
-            }
+        to {
+          transform: translateX(-50%);
+        }
+      }
 
-            to {
-                transform: translateX(-65%);
-            }
+      @keyframes moveLeft2 {
+        from {
+          transform: translateX(-15%);
         }
 
-        @keyframes moveLeft3 {
-            from {
-                transform: translateX(-5%);
-            }
+        to {
+          transform: translateX(-65%);
+        }
+      }
 
-            to {
-                transform: translateX(-55%);
-            }
+      @keyframes moveLeft3 {
+        from {
+          transform: translateX(-5%);
         }
 
-        /* =========================
+        to {
+          transform: translateX(-55%);
+        }
+      }
+
+      @keyframes moveLeft {
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* RIGHT ← */
+
+      @keyframes moveRight {
+        from {
+          transform: translateX(-50%);
+        }
+
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      /* =========================
            MOBILE
            ========================= */
 
-        @media (max-width: 600px) {
-
-            .photo {
-                width: 145px;
-                height: 115px;
-            }
-
-            .photo-row {
-                gap: 12px;
-            }
-
-            .card {
-                padding: 34px 25px;
-                border-radius: 20px;
-            }
-
-            .emoji {
-                font-size: 48px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-
-            p {
-                font-size: 16px;
-            }
-
-            .button {
-                width: 100%;
-                padding: 15px 20px;
-            }
+      @media (max-width: 600px) {
+        .photo {
+          width: 145px;
+          height: 115px;
         }
 
-        /* Respect reduced-motion preferences */
-        @media (prefers-reduced-motion: reduce) {
-            .photo-row {
-                animation: none;
-            }
+        .photo-row {
+          gap: 12px;
         }
+
+        .card {
+          padding: 34px 25px;
+          border-radius: 20px;
+        }
+
+        .emoji {
+          font-size: 48px;
+        }
+
+        h1 {
+          font-size: 26px;
+        }
+
+        p {
+          font-size: 16px;
+        }
+
+        .button {
+          width: 100%;
+          padding: 15px 20px;
+        }
+      }
+
+      /* Respect reduced-motion preferences */
+      @media (prefers-reduced-motion: reduce) {
+        .photo-row {
+          animation: none;
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- =========================
          MOVING PHOTO WALL
          ========================= -->
 
-    <div class="photo-wall">
-
-        <div class="photo-row row-1">
-            <img class="photo" src="IMG20220403100003.jpg">
-            <img class="photo" src="IMG20221117211413.jpg">
-            <img class="photo" src="IMG20230119120218.jpg">
-            <img class="photo" src="IMG20230129093104.jpg">
-            <img class="photo" src="IMG20230921080846.jpg">
-            <img class="photo" src="IMG20231003130902.jpg">
-            <img class="photo" src="IMG20240526163338.jpg">
-            <img class="photo" src="IMG_3672.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
-            <img class="photo" src="contour_haru.png">
-
-            <!-- Repeat -->
-            <img class="photo" src="IMG20220403100003.jpg">
-            <img class="photo" src="IMG20221117211413.jpg">
-            <img class="photo" src="IMG20230119120218.jpg">
-            <img class="photo" src="IMG20230129093104.jpg">
-            <img class="photo" src="IMG20230921080846.jpg">
-            <img class="photo" src="IMG20231003130902.jpg">
-            <img class="photo" src="IMG20240526163338.jpg">
-            <img class="photo" src="IMG_3672.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
-            <img class="photo" src="contour_haru.png">
-        </div>
-
-
-        <div class="photo-row row-2">
-            <img class="photo" src="IMG20230921080846.jpg">
-            <img class="photo" src="IMG20220403100003.jpg">
-            <img class="photo" src="contour_haru.png">
-            <img class="photo" src="IMG20240526163338.jpg">
-            <img class="photo" src="IMG_3672.jpg">
-            <img class="photo" src="IMG20230119120218.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
-            <img class="photo" src="IMG20231003130902.jpg">
-            <img class="photo" src="IMG20221117211413.jpg">
-            <img class="photo" src="IMG20230129093104.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
-
-            <!-- Repeat -->
-            <img class="photo" src="IMG20230921080846.jpg">
-            <img class="photo" src="IMG20220403100003.jpg">
-            <img class="photo" src="contour_haru.png">
-            <img class="photo" src="IMG20240526163338.jpg">
-            <img class="photo" src="IMG_3672.jpg">
-            <img class="photo" src="IMG20230119120218.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
-            <img class="photo" src="IMG20231003130902.jpg">
-            <img class="photo" src="IMG20221117211413.jpg">
-            <img class="photo" src="IMG20230129093104.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
-        </div>
-
-
-        <div class="photo-row row-3">
-            <img class="photo" src="IMG_3672.jpg">
-            <img class="photo" src="IMG20230129093104.jpg">
-            <img class="photo" src="IMG20221117211413.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
-            <img class="photo" src="IMG20220403100003.jpg">
-            <img class="photo" src="IMG20231003130902.jpg">
-            <img class="photo" src="contour_haru.png">
-            <img class="photo" src="IMG20230119120218.jpg">
-            <img class="photo" src="IMG20240526163338.jpg">
-            <img class="photo" src="IMG20230921080846.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
-
-            <!-- Repeat -->
-            <img class="photo" src="IMG_3672.jpg">
-            <img class="photo" src="IMG20230129093104.jpg">
-            <img class="photo" src="IMG20221117211413.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
-            <img class="photo" src="IMG20220403100003.jpg">
-            <img class="photo" src="IMG20231003130902.jpg">
-            <img class="photo" src="contour_haru.png">
-            <img class="photo" src="IMG20230119120218.jpg">
-            <img class="photo" src="IMG20240526163338.jpg">
-            <img class="photo" src="IMG20230921080846.jpg">
-            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
-        </div>
-
+    <div class="photo-wall" id="photoWall">
+      <div class="photo-row row-left row-1"></div>
+      <div class="photo-row row-right row-2"></div>
+      <div class="photo-row row-left row-3"></div>
+      <div class="photo-row row-right row-4"></div>
+      <div class="photo-row row-left row-5"></div>
+      <div class="photo-row row-right row-6"></div>
     </div>
 
     <!-- Darkens the background slightly -->
     <div class="photo-overlay"></div>
-
 
     <!-- =========================
          MAIN CONTENT
          ========================= -->
 
     <main class="content">
+      <div class="card">
+        <div class="emoji">🎁</div>
 
-        <div class="card">
+        <h1>A Little Birthday Present</h1>
 
-            <div class="emoji">
-                🎁
-            </div>
+        <p>
+          If you don't know what to get me, you can always send me some money
+        </p>
 
-            <h1>
-                A Little Birthday Present
-            </h1>
+        <a
+          class="button"
+          href="https://www.youtube.com/watch?v=xvFZjo5PgG0"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          💸 Send a Gift
+        </a>
 
-            <p>
-                If you don't know what to get me,
-                you can always send me some money 😂
-            </p>
-
-            <a
-                class="button"
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                💸 Send a Gift
-            </a>
-
-            <div class="small-text">
-                Thank you for your generosity ❤️
-            </div>
-
-        </div>
-
+        <div class="small-text">Thank you for your generosity ❤️</div>
+      </div>
     </main>
+    <script>
+      // ============================================================
+      // RANDOM PHOTO CAROUSEL / PHOTO WALL
+      // Ogni refresh della pagina genera un ordine casuale nuovo.
+      // ============================================================
+      const photos = [
+          "20200723_222154.jpg",
+          "20210404_190620.jpg",
+          "contour_haru.png",
+          "IMG_3672.jpg",
+          "IMG20220202151844.jpg",
+          "IMG20220403100003.jpg",
+          "IMG20220412110238.jpg",
+          "IMG20220415182329.jpg",
+          "IMG20221117211413.jpg",
+          "IMG20230119120218.jpg",
+          "IMG20230129093104.jpg",
+          "IMG20230318145227.jpg",
+          "IMG20230325105503.jpg",
+          "IMG20230430093316.jpg",
+          "IMG20230921080846.jpg",
+          "IMG20231003130902.jpg",
+          "IMG20240526163338.jpg",
+          "Turkey-1.png",
+          "wcat-1x.png"
+      ];
 
-</body>
+      function shuffle(array) {
+        const copy = [...array];
+
+        // Fisher-Yates: mescolamento uniforme
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+
+        return copy;
+      }
+
+      function fillPhotoRows() {
+        const rows = document.querySelectorAll(".photo-row");
+
+        // IMG_3672 compare una sola volta nell'intero photo wall.
+        // (Nel tuo screenshot il file è IMG_3672.jpg, non IMG_3572.jpg.)
+        const rarePhoto = "IMG_3672.jpg";
+        const normalPhotos = photos.filter((src) => src !== rarePhoto);
+
+        // Scegli casualmente una sola delle 6 righe in cui mostrarla.
+        const rareRowIndex = Math.floor(Math.random() * rows.length);
+
+        rows.forEach((row, rowIndex) => {
+          let shuffled;
+
+          if (rowIndex === rareRowIndex) {
+            // Solo questa riga contiene la foto rara.
+            shuffled = shuffle(normalPhotos);
+            const insertAt = Math.floor(Math.random() * (shuffled.length + 1));
+            shuffled.splice(insertAt, 0, rarePhoto);
+          } else {
+            // Tutte le altre righe non contengono la foto rara.
+            shuffled = shuffle(normalPhotos);
+          }
+
+          // Duplichiamo la sequenza per permettere all'animazione
+          // di scorrere senza "buchi".
+          const sequence = [...shuffled, ...shuffled];
+
+          row.innerHTML = sequence
+            .map(
+              (src) =>
+                `<img class="photo" src="${src}" alt="" draggable="false" />`
+            )
+            .join("");
+        });
+      }
+
+      fillPhotoRows();
+    </script>
+
+  </body>
 </html>
