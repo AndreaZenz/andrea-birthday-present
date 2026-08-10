@@ -1,80 +1,420 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>A small gift 🎁</title>
+    <title>A Little Birthday Present 🎁</title>
 
-    <!-- Anteprima WhatsApp -->
-    <meta property="og:title" content="A small gift 🎁">
+    <!-- WhatsApp / Social Preview -->
+    <meta property="og:title" content="A little birthday present 🎁">
     <meta property="og:description"
-          content="If you are not sure what to gift me, you can put a tiny coin in here ">
+          content="If you don't know what to get me, you can always send me some money 😂">
     <meta property="og:type" content="website">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #111;
+            color: #222;
+        }
+
+        /* =========================
+           PHOTO BACKGROUND
+           ========================= */
+
+        .photo-wall {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .photo-row {
+            position: absolute;
+            left: 0;
+            width: max-content;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            gap: 18px;
+            will-change: transform;
+        }
+
+        .row-1 {
+            top: -20px;
+            animation: moveLeft1 45s linear infinite;
+        }
+
+        .row-2 {
+            top: 32%;
+            animation: moveLeft2 60s linear infinite;
+        }
+
+        .row-3 {
+            top: 67%;
+            animation: moveLeft3 52s linear infinite;
+        }
+
+        .photo {
+            width: 190px;
+            height: 145px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+
+            /* Slightly faded so the card stays readable */
+            opacity: 0.72;
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.35);
+
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .photo:nth-child(3n) {
+            transform: rotate(-2deg);
+        }
+
+        .photo:nth-child(3n + 1) {
+            transform: rotate(1.5deg);
+        }
+
+        .photo:nth-child(3n + 2) {
+            transform: rotate(-1deg);
+        }
+
+        /* Dark overlay */
+        .photo-overlay {
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.28),
+                    rgba(0, 0, 0, 0.42)
+                );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* =========================
+           CENTER CARD
+           ========================= */
+
+        .content {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
         }
 
         .card {
-            background: white;
-            padding: 40px;
-            border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(0,0,0,.12);
+            width: min(430px, 100%);
+
+            background: rgba(255, 255, 255, 0.94);
+
+            padding: 42px 36px;
+
+            border-radius: 24px;
+
             text-align: center;
-            max-width: 420px;
-            margin: 20px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.45);
+
+            backdrop-filter: blur(8px);
+        }
+
+        .emoji {
+            font-size: 58px;
+            margin-bottom: 12px;
         }
 
         h1 {
-            margin-bottom: 15px;
+            margin: 0 0 16px;
+            font-size: 30px;
+            line-height: 1.15;
         }
 
         p {
+            margin: 0;
             color: #555;
-            line-height: 1.5;
+            font-size: 17px;
+            line-height: 1.55;
         }
 
         .button {
             display: inline-block;
-            margin-top: 20px;
-            padding: 15px 28px;
+
+            margin-top: 28px;
+            padding: 15px 30px;
+
             background: #0070ba;
             color: white;
+
             text-decoration: none;
-            border-radius: 25px;
+
+            border-radius: 999px;
+
+            font-size: 16px;
             font-weight: bold;
-            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px rgba(0, 112, 186, 0.3);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
         }
 
         .button:hover {
             background: #005ea6;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 112, 186, 0.4);
+        }
+
+        .small-text {
+            margin-top: 18px;
+
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* =========================
+           ANIMATIONS
+           ========================= */
+
+        @keyframes moveLeft1 {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes moveLeft2 {
+            from {
+                transform: translateX(-15%);
+            }
+
+            to {
+                transform: translateX(-65%);
+            }
+        }
+
+        @keyframes moveLeft3 {
+            from {
+                transform: translateX(-5%);
+            }
+
+            to {
+                transform: translateX(-55%);
+            }
+        }
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 600px) {
+
+            .photo {
+                width: 145px;
+                height: 115px;
+            }
+
+            .photo-row {
+                gap: 12px;
+            }
+
+            .card {
+                padding: 34px 25px;
+                border-radius: 20px;
+            }
+
+            .emoji {
+                font-size: 48px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            .button {
+                width: 100%;
+                padding: 15px 20px;
+            }
+        }
+
+        /* Respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .photo-row {
+                animation: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="card">
-    <h1>🎁 A small gift</h1>
+    <!-- =========================
+         MOVING PHOTO WALL
+         ========================= -->
 
-    <p>
-        If you are unsure what to gift, 
-      here is a few ideas for you 😂
-    </p>
+    <div class="photo-wall">
 
-    <a class="button"
-       href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-        💸 Send the gift
-    </a>
-</div>
+        <div class="photo-row row-1">
+            <img class="photo" src="IMG20220403100003.jpg">
+            <img class="photo" src="IMG20221117211413.jpg">
+            <img class="photo" src="IMG20230119120218.jpg">
+            <img class="photo" src="IMG20230129093104.jpg">
+            <img class="photo" src="IMG20230921080846.jpg">
+            <img class="photo" src="IMG20231003130902.jpg">
+            <img class="photo" src="IMG20240526163338.jpg">
+            <img class="photo" src="IMG_3672.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
+            <img class="photo" src="contour_haru.png">
+
+            <!-- Repeat -->
+            <img class="photo" src="IMG20220403100003.jpg">
+            <img class="photo" src="IMG20221117211413.jpg">
+            <img class="photo" src="IMG20230119120218.jpg">
+            <img class="photo" src="IMG20230129093104.jpg">
+            <img class="photo" src="IMG20230921080846.jpg">
+            <img class="photo" src="IMG20231003130902.jpg">
+            <img class="photo" src="IMG20240526163338.jpg">
+            <img class="photo" src="IMG_3672.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
+            <img class="photo" src="contour_haru.png">
+        </div>
+
+
+        <div class="photo-row row-2">
+            <img class="photo" src="IMG20230921080846.jpg">
+            <img class="photo" src="IMG20220403100003.jpg">
+            <img class="photo" src="contour_haru.png">
+            <img class="photo" src="IMG20240526163338.jpg">
+            <img class="photo" src="IMG_3672.jpg">
+            <img class="photo" src="IMG20230119120218.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
+            <img class="photo" src="IMG20231003130902.jpg">
+            <img class="photo" src="IMG20221117211413.jpg">
+            <img class="photo" src="IMG20230129093104.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
+
+            <!-- Repeat -->
+            <img class="photo" src="IMG20230921080846.jpg">
+            <img class="photo" src="IMG20220403100003.jpg">
+            <img class="photo" src="contour_haru.png">
+            <img class="photo" src="IMG20240526163338.jpg">
+            <img class="photo" src="IMG_3672.jpg">
+            <img class="photo" src="IMG20230119120218.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
+            <img class="photo" src="IMG20231003130902.jpg">
+            <img class="photo" src="IMG20221117211413.jpg">
+            <img class="photo" src="IMG20230129093104.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
+        </div>
+
+
+        <div class="photo-row row-3">
+            <img class="photo" src="IMG_3672.jpg">
+            <img class="photo" src="IMG20230129093104.jpg">
+            <img class="photo" src="IMG20221117211413.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
+            <img class="photo" src="IMG20220403100003.jpg">
+            <img class="photo" src="IMG20231003130902.jpg">
+            <img class="photo" src="contour_haru.png">
+            <img class="photo" src="IMG20230119120218.jpg">
+            <img class="photo" src="IMG20240526163338.jpg">
+            <img class="photo" src="IMG20230921080846.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
+
+            <!-- Repeat -->
+            <img class="photo" src="IMG_3672.jpg">
+            <img class="photo" src="IMG20230129093104.jpg">
+            <img class="photo" src="IMG20221117211413.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.26.jpeg">
+            <img class="photo" src="IMG20220403100003.jpg">
+            <img class="photo" src="IMG20231003130902.jpg">
+            <img class="photo" src="contour_haru.png">
+            <img class="photo" src="IMG20230119120218.jpg">
+            <img class="photo" src="IMG20240526163338.jpg">
+            <img class="photo" src="IMG20230921080846.jpg">
+            <img class="photo" src="WhatsApp Image 2023-05-01 at 16.05.49.jpeg">
+        </div>
+
+    </div>
+
+    <!-- Darkens the background slightly -->
+    <div class="photo-overlay"></div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+
+    <main class="content">
+
+        <div class="card">
+
+            <div class="emoji">
+                🎁
+            </div>
+
+            <h1>
+                A Little Birthday Present
+            </h1>
+
+            <p>
+                If you don't know what to get me,
+                you can always send me some money 😂
+            </p>
+
+            <a
+                class="button"
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                💸 Send a Gift
+            </a>
+
+            <div class="small-text">
+                Thank you for your generosity ❤️
+            </div>
+
+        </div>
+
+    </main>
 
 </body>
 </html>
